@@ -18,6 +18,9 @@ jobs:
           - '5.2.0'
           - '6.0.0'
           - '6.1.0.rc2'
+        exclude:
+          - ruby: 2.7
+            rails_version: '4.2.0'
 
     continue-on-error: ${{ matrix.rails_version == 'edge' || endsWith(matrix.ruby, 'head') }}
 
