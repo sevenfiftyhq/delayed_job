@@ -316,6 +316,10 @@ module Delayed
       job = Delayed::Job.reserve(self)
       @failed_reserve_count = 0
       job
+    rescue ::PG::ConnectionBad => error
+      # ignore DB restarts and keep trying
+      Delayed::Job.recover_from(error)
+      nil
     rescue ::Exception => error # rubocop:disable RescueException
       say "Error while reserving job: #{error}"
       Delayed::Job.recover_from(error)
